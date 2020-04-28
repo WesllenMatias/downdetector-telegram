@@ -19,13 +19,11 @@
 # ------------------------------------------------------------------------ #
 from requests import get
 from bs4 import BeautifulSoup as bs
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from datetime import datetime
 import telebot
 import config
 
-base_url = 'https://downdetector.com.br/'
-#link = f"{base_url}/fora-do-ar/"
+
 bot = telebot.TeleBot(config.TOKEN)
 
 @bot.message_handler(commands=['start', 'help'])
@@ -34,11 +32,10 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['foradoar'])
 def downdetector_foradoar (message):
-    options = Options()
-    options.headless = True
-    browser = webdriver.Firefox(options=options)
-    browser.get(base_url)
-    downdetector = browser.page_source
+    url = 'http://downdetector.com.br'
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+    result = get(url, headers=headers)
+    downdetector = result.content.decode()
     downdetector_page = bs(downdetector,'html.parser')
 
     problemas = downdetector_page.find_all('h5')
@@ -54,8 +51,11 @@ def downdetector_foradoar (message):
     n3 = lista[2].strip('</')
     n4 = lista[3].strip('</')
     n5 = lista[4].strip('</')
-
-    msg = "Top 5 Downdetector:\n\n 1 - {}\n 2 - {}\n 3 - {}\n 4 - {}\n 5 - {}\n".format(n1,n2,n3,n4,n5)
-    bot.reply_to(message,msg)
+    
+    data_hj = datetime.now()
+    data_atual = data_hj.strftime('%d/%m/%Y %H:%M')
+    
+    msg = "Top 5 Downdetector:\n\n 1 - {}\n 2 - {}\n 3 - {}\n 4 - {}\n 5 - {}\n \nData da Consulta: *{}*\n".format(n1,n2,n3,n4,n5,data_atual)
+    bot.reply_to(message,msg,parse_mode="Markdown")
 
 bot.polling()
