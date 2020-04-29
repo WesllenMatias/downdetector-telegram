@@ -39,7 +39,7 @@ def downdetector_foradoar (message):
     downdetector_page = bs(downdetector,'html.parser')
 
     problemas = downdetector_page.find_all('h5')
-    browser.close()
+    
     lista = []
 
     for problema in problemas:
@@ -51,10 +51,10 @@ def downdetector_foradoar (message):
     n3 = lista[2].strip('</')
     n4 = lista[3].strip('</')
     n5 = lista[4].strip('</')
-    
+
     data_hj = datetime.now()
     data_atual = data_hj.strftime('%d/%m/%Y %H:%M')
-    
+
     msg = "Top 5 Downdetector:\n\n 1 - {}\n 2 - {}\n 3 - {}\n 4 - {}\n 5 - {}\n \nData da Consulta: *{}*\n".format(n1,n2,n3,n4,n5,data_atual)
     bot.reply_to(message,msg,parse_mode="Markdown")
 
