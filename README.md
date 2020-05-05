@@ -8,6 +8,7 @@ Step-by-Step to use the bot:
 ## Install dependences:
 
 __São utilizadas algumas bibliotecas que precisam ser instaladas:__
+
 __We need install libs:__
 
 - Requests
@@ -15,6 +16,7 @@ __We need install libs:__
 - BeautifulSoup
 
 __-OBS: O python utilizado é o Python3__
+
 __PS: The code Run in Python3.x__
 
 ```shellscript
