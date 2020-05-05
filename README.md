@@ -38,5 +38,3 @@ git clone https://github.com/WesllenMatias/downdetector-telegram.git
 TOKEN = "Informe o Token do seu bot aqui"
 
 ```
-
-##
